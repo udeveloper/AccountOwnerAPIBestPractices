@@ -63,5 +63,14 @@ namespace AccountOwnerServer.Extensions
         {
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
+
+        public static void ConfigureRedisCache(this IServiceCollection services)
+        {
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = "localhost:6379"; //location of redis server
+                options.InstanceName = "ClinicalCache";
+            });
+        }
     }
 }

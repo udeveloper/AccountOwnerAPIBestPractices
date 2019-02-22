@@ -11,8 +11,8 @@ namespace AccountOwnerServerAPI.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        private ILoggerManager _logger;
-        private IRepositoryWrapper _repositoryWraper;
+        private readonly ILoggerManager _logger;
+        private readonly IRepositoryWrapper _repositoryWraper;
         public ValuesController(ILoggerManager logger,IRepositoryWrapper repositoryWrapper)
         {
             _logger = logger;
@@ -23,11 +23,8 @@ namespace AccountOwnerServerAPI.Controllers
         public ActionResult<IEnumerable<string>> Get()
         {
 
-            var domesticAccounts= this._repositoryWraper.Account.FindByCondition(x=>x.AccountType.Equals("Domestic"));
-            var owners = this._repositoryWraper.Owner.FindAll();
-
-            _logger.LogInfo("Here is info message from our values controller." + domesticAccounts.Count().ToString());
-            _logger.LogDebug("Here is debug message from our values controller." + owners.Count().ToString());
+            _logger.LogInfo("Here is info message from our values controller." );
+            _logger.LogDebug("Here is debug message from our values controller.");
             _logger.LogWarn("Here is warn message from our values controller.");
             _logger.LogError("Here is error message from our values controller.");
             

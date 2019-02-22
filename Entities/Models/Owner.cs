@@ -7,7 +7,7 @@ using System.Text;
 namespace Entities.Models
 {
     [Table("owner")]
-    public class Owner
+    public class Owner : IEntity
     {
         [Key]
         [Column("OwnerId")]

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Entities.ExtendedModels
 {
-    public class OwnerExtended
+    public class OwnerExtended : IEntity
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

@@ -4,8 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AccountOwnerServer.Extensions;
+using AccountOwnerServerAPI.Extensions;
+using Entities.ExtendedModels;
+using LoggerService;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +40,10 @@ namespace AccountOwnerServerAPI
 
             services.ConfigureIISIntegration();
 
+            services.AddResponseCaching();
+
+            services.ConfigureRedisCache();
+
             services.ConfigureMySqlContext(Configuration);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -45,7 +54,7 @@ namespace AccountOwnerServerAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerManager logger)
         {
             if (env.IsDevelopment())
             {
@@ -68,6 +77,10 @@ namespace AccountOwnerServerAPI
             app.UseStaticFiles();
 
             app.UseCookiePolicy();
+
+            app.ConfigureExceptionHandler(logger);
+
+            app.UseResponseCaching();
 
             app.UseMvc();
         }

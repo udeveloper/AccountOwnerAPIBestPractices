@@ -14,5 +14,10 @@ namespace Repository
         {
 
         }
+
+        public IEnumerable<Account> AccountsByOwner(Guid ownerId)
+        {
+            return FindByCondition(a => a.OwnerId.Equals(ownerId));
+        }
     }
 }
